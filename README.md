@@ -10,6 +10,7 @@ A modern, production-ready React application built with TypeScript, Tailwind CSS
 - **🛣️ React Router** - Client-side routing with protected routes
 - **🎭 Context API** - State management with React Context
 - **🧪 Vitest** - Fast unit testing with React Testing Library
+- **📚 Storybook** - Component development and documentation
 - **📏 ESLint & Prettier** - Code quality and formatting
 - **🌙 Dark Mode** - Built-in theme switching
 - **♿ Accessibility** - WCAG compliant components
@@ -134,6 +135,10 @@ npm run type-check       # Run TypeScript type checking
 npm run test             # Run tests
 npm run test:ui          # Run tests with UI
 npm run test:coverage    # Run tests with coverage
+
+# Storybook
+npm run storybook        # Start Storybook development server
+npm run build-storybook # Build Storybook for production
 ```
 
 ## 🎨 Styling
@@ -160,6 +165,34 @@ npm run test:watch
 # Run tests with coverage
 npm run test:coverage
 ```
+
+## 📚 Storybook
+
+Storybook is configured for component development and documentation:
+
+```bash
+# Start Storybook development server
+npm run storybook
+
+# Build Storybook for production
+npm run build-storybook
+```
+
+### Storybook Features:
+- **Component Documentation** - Interactive component documentation
+- **Design System** - Centralized component library
+- **Visual Testing** - Component testing in isolation
+- **Accessibility Testing** - Built-in a11y addon
+- **Theme Switching** - Light/dark mode testing
+- **Responsive Testing** - Multiple viewport sizes
+- **Interactive Controls** - Live component editing
+
+### Available Stories:
+- **Button** - All variants, sizes, and states
+- **Input** - Form inputs with validation states
+- **LoadingSpinner** - Loading indicators
+- **Layout Components** - Header, Footer, Layout
+- **Page Components** - Home, Login, Register, Dashboard
 
 ## 🚀 Deployment
 
