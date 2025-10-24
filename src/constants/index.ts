@@ -14,6 +14,7 @@ export const STORAGE_KEYS = {
   USER_DATA: 'user_data',
   THEME: 'theme',
   SIDEBAR_STATE: 'sidebar_state',
+  NOTIFICATIONS: 'notifications',
 } as const
 
 export const THEME_OPTIONS = [

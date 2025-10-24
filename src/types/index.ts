@@ -31,3 +31,18 @@ export interface AppState {
   theme: Theme
   sidebarOpen: boolean
 }
+
+// Notification types
+export interface Notification {
+  id: string
+  message: string
+  type: 'success' | 'error' | 'warning' | 'info'
+  duration?: number
+  timestamp: number
+  isVisible: boolean
+}
+
+export interface NotificationState {
+  notifications: Notification[]
+  maxNotifications: number
+}

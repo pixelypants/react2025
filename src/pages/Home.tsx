@@ -1,8 +1,28 @@
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/Button'
+import { useNotificationActions } from '@/components/ui/Notification'
 import { ROUTES } from '@/constants'
 
 export function Home() {
+  const { showSuccess, showError, showWarning, showInfo, clearAll } = useNotificationActions()
+
+  const handleNotificationDemo = (type: 'success' | 'error' | 'warning' | 'info') => {
+    switch (type) {
+      case 'success':
+        showSuccess('🎉 Welcome to ReactApp! You\'re all set up!', 3000)
+        break
+      case 'error':
+        showError('❌ Oops! Something went wrong. Please try again.', 4000)
+        break
+      case 'warning':
+        showWarning('⚠️ This is a warning message. Please be careful!', 5000)
+        break
+      case 'info':
+        showInfo('ℹ️ Here\'s some useful information for you.', 3000)
+        break
+    }
+  }
+
   return (
     <div className="text-center">
       <div className="max-w-3xl mx-auto">
@@ -17,6 +37,56 @@ export function Home() {
           best practices. Experience the power of a well-structured, scalable
           frontend application.
         </p>
+        
+        {/* Notification Demo Section */}
+        <div className="mt-8 p-6 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            🔔 Notification System Demo
+          </h3>
+          <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+            Try out the notification system! Notifications are persisted in localStorage.
+          </p>
+          <div className="flex flex-wrap gap-2 justify-center">
+            <Button 
+              onClick={() => handleNotificationDemo('success')}
+              className="bg-green-500 hover:bg-green-600 text-white"
+            >
+              Success
+            </Button>
+            <Button 
+              onClick={() => handleNotificationDemo('error')}
+              className="bg-red-500 hover:bg-red-600 text-white"
+            >
+              Error
+            </Button>
+            <Button 
+              onClick={() => handleNotificationDemo('warning')}
+              className="bg-yellow-500 hover:bg-yellow-600 text-white"
+            >
+              Warning
+            </Button>
+            <Button 
+              onClick={() => handleNotificationDemo('info')}
+              className="bg-blue-500 hover:bg-blue-600 text-white"
+            >
+              Info
+            </Button>
+            <Button 
+              onClick={clearAll}
+              variant="outline"
+              className="border-gray-300 dark:border-gray-600"
+            >
+              Clear All
+            </Button>
+          </div>
+          <div className="mt-4 p-3 bg-yellow-100 dark:bg-yellow-900 border border-yellow-300 dark:border-yellow-700 rounded">
+            <p className="text-sm text-yellow-800 dark:text-yellow-200">
+              <strong>Debug:</strong> Check the browser console (F12) to see notification logs. 
+              Notifications should appear in the top-right corner.
+            </p>
+          </div>
+        </div>
+
         <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
           <Link to={ROUTES.REGISTER}>
             <Button size="lg" className="w-full sm:w-auto">
