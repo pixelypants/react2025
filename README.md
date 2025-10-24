@@ -11,6 +11,7 @@ A modern, production-ready React application built with TypeScript, Tailwind CSS
 - **🎭 Context API** - State management with React Context
 - **🧪 Vitest** - Fast unit testing with React Testing Library
 - **📚 Storybook** - Component development and documentation
+- **🎨 shadcn/ui** - Modern component library with Tailwind CSS
 - **📏 ESLint & Prettier** - Code quality and formatting
 - **🌙 Dark Mode** - Built-in theme switching
 - **♿ Accessibility** - WCAG compliant components
@@ -166,6 +167,34 @@ npm run test:watch
 npm run test:coverage
 ```
 
+## 🎨 shadcn/ui Component Library
+
+This project uses shadcn/ui for modern, accessible components:
+
+```bash
+# Add new components
+npx shadcn@latest add [component-name]
+
+# Examples
+npx shadcn@latest add button card input dialog
+```
+
+### Available Components:
+- **Card** - Flexible card components with header, content, footer
+- **Badge** - Status descriptors and labels  
+- **Avatar** - User profile images with fallbacks
+- **Dialog** - Modal dialogs and overlays
+- **Dropdown Menu** - Contextual menus
+- **Label** - Form labels with accessibility
+- **Form** - Form handling with validation
+
+### Features:
+- **Copy-paste components** - No runtime dependencies
+- **Tailwind CSS integration** - Perfect for your setup
+- **Accessibility first** - WCAG compliant out of the box
+- **TypeScript native** - Full type safety
+- **Customizable** - Own the code, modify as needed
+
 ## 📚 Storybook
 
 Storybook is configured for component development and documentation:
@@ -191,6 +220,9 @@ npm run build-storybook
 - **Button** - All variants, sizes, and states
 - **Input** - Form inputs with validation states
 - **LoadingSpinner** - Loading indicators
+- **Card** - Flexible card components with header, content, footer
+- **Badge** - Status descriptors and labels
+- **Avatar** - User profile images with fallbacks
 - **Layout Components** - Header, Footer, Layout
 - **Page Components** - Home, Login, Register, Dashboard
 
