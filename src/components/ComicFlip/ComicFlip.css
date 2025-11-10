@@ -1,0 +1,55 @@
+/* ComicFlip Component Styles */
+/* Based on FSI Pages structure pattern */
+
+.comicflip-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  background: transparent;
+}
+
+.comicflip-page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.comicflip-page-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+/* Customize react-pageflip styles */
+.comicflip-container .stf__block {
+  background: transparent;
+}
+
+.comicflip-container .stf__item {
+  background: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.comicflip-container .stf__item--hard {
+  background: #fff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .comicflip-container {
+    padding: 10px;
+  }
+}
+

@@ -7,6 +7,7 @@ export const ROUTES = {
   DASHBOARD: '/dashboard',
   PROFILE: '/profile',
   SETTINGS: '/settings',
+  COMICFLIP: '/comicflip',
 } as const
 
 export const STORAGE_KEYS = {

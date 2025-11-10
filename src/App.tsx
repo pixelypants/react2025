@@ -10,6 +10,7 @@ import { Home } from '@/pages/Home'
 import { Login } from '@/pages/Login'
 import { Register } from '@/pages/Register'
 import { Dashboard } from '@/pages/Dashboard'
+import { ComicFlipDemo } from '@/pages/ComicFlipDemo'
 import { ROUTES } from '@/constants'
 
 function App() {
@@ -38,6 +39,14 @@ function App() {
                         <Dashboard />
                       </Layout>
                     </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path={ROUTES.COMICFLIP}
+                  element={
+                    <Layout>
+                      <ComicFlipDemo />
+                    </Layout>
                   }
                 />
                 <Route path="*" element={<Navigate to={ROUTES.HOME} replace />} />
