@@ -1,0 +1,60 @@
+{
+  "pages": [
+    {
+      "filename": "front-cover.jpeg",
+      "order": 0,
+      "alt": "Front Cover"
+    },
+    {
+      "filename": "page1.jpeg",
+      "order": 1,
+      "alt": "Page 1"
+    },
+    {
+      "filename": "page2.jpeg",
+      "order": 2,
+      "alt": "Page 2"
+    },
+    {
+      "filename": "page3.jpeg",
+      "order": 3,
+      "alt": "Page 3"
+    },
+    {
+      "filename": "page4.jpeg",
+      "order": 4,
+      "alt": "Page 4"
+    },
+    {
+      "filename": "page5.jpeg",
+      "order": 5,
+      "alt": "Page 5"
+    },
+    {
+      "filename": "page6.jpeg",
+      "order": 6,
+      "alt": "Page 6"
+    },
+    {
+      "filename": "page7.jpeg",
+      "order": 7,
+      "alt": "Page 7"
+    },
+    {
+      "filename": "page8.jpeg",
+      "order": 8,
+      "alt": "Page 8"
+    },
+    {
+      "filename": "page9.jpeg",
+      "order": 9,
+      "alt": "Page 9"
+    },
+    {
+      "filename": "page10.jpeg",
+      "order": 10,
+      "alt": "Page 10"
+    }
+  ]
+}
+

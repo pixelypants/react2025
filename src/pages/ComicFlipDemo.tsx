@@ -1,23 +1,44 @@
 import { ComicFlip } from '@/components/ComicFlip/ComicFlip'
 import type { ComicFlipPage } from '@/components/ComicFlip/ComicFlip'
+import metadata from '@/assets/comic/metadata.json'
 
-// Import local assets from assets/pages
-import page1 from '@/assets/pages/2131250c017aa0609a1e72acc2941ce5.jpg'
-import page2 from '@/assets/pages/7b4b8853746b542d45a56991075b492b.jpg'
-import page3 from '@/assets/pages/blackterror1643-823ab4-640.jpg'
-import page4 from '@/assets/pages/c4606da3fe73adc813abe8be5762b712.jpg'
-import page5 from '@/assets/pages/c4a3776f4531274b0f56c545caf18ce0.jpg'
-import page6 from '@/assets/pages/MCP_Spider-Man_pg5.jpg'
+// Import all comic images
+import frontCover from '@/assets/comic/front-cover.jpeg'
+import page1 from '@/assets/comic/page1.jpeg'
+import page2 from '@/assets/comic/page2.jpeg'
+import page3 from '@/assets/comic/page3.jpeg'
+import page4 from '@/assets/comic/page4.jpeg'
+import page5 from '@/assets/comic/page5.jpeg'
+import page6 from '@/assets/comic/page6.jpeg'
+import page7 from '@/assets/comic/page7.jpeg'
+import page8 from '@/assets/comic/page8.jpeg'
+import page9 from '@/assets/comic/page9.jpeg'
+import page10 from '@/assets/comic/page10.jpeg'
+
+// Map filenames to imported images
+const imageMap: Record<string, string> = {
+  'front-cover.jpeg': frontCover,
+  'page1.jpeg': page1,
+  'page2.jpeg': page2,
+  'page3.jpeg': page3,
+  'page4.jpeg': page4,
+  'page5.jpeg': page5,
+  'page6.jpeg': page6,
+  'page7.jpeg': page7,
+  'page8.jpeg': page8,
+  'page9.jpeg': page9,
+  'page10.jpeg': page10,
+}
 
 export function ComicFlipDemo() {
-  const pages: ComicFlipPage[] = [
-    { src: page1, id: '1', alt: 'Page 1' },
-    { src: page2, id: '2', alt: 'Page 2' },
-    { src: page3, id: '3', alt: 'Page 3' },
-    { src: page4, id: '4', alt: 'Page 4' },
-    { src: page5, id: '5', alt: 'Page 5' },
-    { src: page6, id: '6', alt: 'Page 6' },
-  ]
+  // Sort pages by order from metadata and map to ComicFlipPage format
+  const pages: ComicFlipPage[] = metadata.pages
+    .sort((a, b) => a.order - b.order)
+    .map((page) => ({
+      src: imageMap[page.filename],
+      id: page.order.toString(),
+      alt: page.alt,
+    }))
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4">
@@ -46,8 +67,8 @@ export function ComicFlipDemo() {
         <div className="flex justify-center mb-8">
           <ComicFlip
             pages={pages}
-            width={600}
-            height={800}
+            width={400}
+            height={533}
             showCover={true}
             flippingTime={800}
             usePortrait={true}

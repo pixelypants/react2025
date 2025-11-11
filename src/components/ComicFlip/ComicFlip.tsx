@@ -38,8 +38,8 @@ export interface ComicFlipProps {
 
 export function ComicFlip({
   pages,
-  width = 600,
-  height = 800,
+  width = 400,
+  height = 533,
   className = '',
   showCover = true,
   maxShadowOpacity = 0.5,
