@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import HTMLFlipBook from 'react-pageflip'
 import './ComicFlip.css'
 
@@ -32,7 +32,6 @@ export interface ComicFlipProps {
   clickEventForward?: boolean
   useMouseEvents?: boolean
   swipeDistance?: number
-  showCoverPage?: boolean
   disableFlipByClick?: boolean
 }
 
@@ -54,19 +53,24 @@ export function ComicFlip({
   minWidth = 0,
   minHeight = 0,
   size = 'stretch',
-  minLeafWidth = 0,
-  showPageCorners = true,
+  showPageCorners = false,
   mobileScrollSupport = false,
   clickEventForward = false,
   useMouseEvents = true,
   swipeDistance = 30,
-  showCoverPage = true,
   disableFlipByClick = false,
 }: ComicFlipProps) {
   const flipBookRef = useRef<any>(null)
+  const [actualPageCount, setActualPageCount] = useState<number | null>(null)
 
   return (
-    <div className={`comicflip-container ${className}`}>
+    <>
+      {actualPageCount !== null && (
+        <div style={{ position: 'absolute', top: '4px', right: '4px', background: 'rgba(0,0,0,0.7)', color: 'white', padding: '8px', borderRadius: '4px', fontSize: '12px', zIndex: 1000 }}>
+          Library reports: {actualPageCount} pages
+        </div>
+      )}
+      <div className={`comicflip-container ${className}`}>
       <HTMLFlipBook
         ref={flipBookRef}
         className="comicflip-flipbook"
@@ -86,14 +90,18 @@ export function ComicFlip({
         minWidth={minWidth}
         minHeight={minHeight}
         size={size}
-        minLeafWidth={minLeafWidth}
         showPageCorners={showPageCorners}
         mobileScrollSupport={mobileScrollSupport}
         clickEventForward={clickEventForward}
         useMouseEvents={useMouseEvents}
         swipeDistance={swipeDistance}
-        showCoverPage={showCoverPage}
         disableFlipByClick={disableFlipByClick}
+        onInit={(e) => {
+          const pageFlip = e.object
+          const count = pageFlip.getPageCount()
+          setActualPageCount(count)
+          console.log('Library initialized with page count:', count, 'Input pages:', pages.length)
+        }}
       >
         {pages.map((page, index) => (
           <div key={page.id || index} className="comicflip-page">
@@ -106,6 +114,7 @@ export function ComicFlip({
         ))}
       </HTMLFlipBook>
     </div>
+    </>
   )
 }
 

@@ -1,0 +1,30 @@
+{
+  "pages": [
+    {
+      "filename": "ChillyNinjas_0.jpeg",
+      "order": 0,
+      "alt": "Front Cover"
+    },
+    {
+      "filename": "ChillyNinjas_1.jpeg",
+      "order": 1,
+      "alt": "Page 1"
+    },
+    {
+      "filename": "ChillyNinjas_2.jpeg",
+      "order": 2,
+      "alt": "Page 2"
+    },
+    {
+      "filename": "ChillyNinjas_3.jpeg",
+      "order": 3,
+      "alt": "Page 3"
+    },
+    {
+      "filename": "ChillyNinjas_4.jpeg",
+      "order": 4,
+      "alt": "Page 4"
+    }
+  ]
+}
+

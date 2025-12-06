@@ -1,33 +1,22 @@
 import { ComicFlip } from '@/components/ComicFlip/ComicFlip'
 import type { ComicFlipPage } from '@/components/ComicFlip/ComicFlip'
-import metadata from '@/assets/comic/metadata.json'
+import metadata from '@/assets/ChillyNinjas/metadata.json'
+import { useEffect, useState } from 'react'
 
-// Import all comic images
-import frontCover from '@/assets/comic/front-cover.jpeg'
-import page1 from '@/assets/comic/page1.jpeg'
-import page2 from '@/assets/comic/page2.jpeg'
-import page3 from '@/assets/comic/page3.jpeg'
-import page4 from '@/assets/comic/page4.jpeg'
-import page5 from '@/assets/comic/page5.jpeg'
-import page6 from '@/assets/comic/page6.jpeg'
-import page7 from '@/assets/comic/page7.jpeg'
-import page8 from '@/assets/comic/page8.jpeg'
-import page9 from '@/assets/comic/page9.jpeg'
-import page10 from '@/assets/comic/page10.jpeg'
+// Import all ChillyNinjas images
+import chillyNinjas0 from '@/assets/ChillyNinjas/ChillyNinjas_0.jpeg'
+import chillyNinjas1 from '@/assets/ChillyNinjas/ChillyNinjas_1.jpeg'
+import chillyNinjas2 from '@/assets/ChillyNinjas/ChillyNinjas_2.jpeg'
+import chillyNinjas3 from '@/assets/ChillyNinjas/ChillyNinjas_3.jpeg'
+import chillyNinjas4 from '@/assets/ChillyNinjas/ChillyNinjas_4.jpeg'
 
 // Map filenames to imported images
 const imageMap: Record<string, string> = {
-  'front-cover.jpeg': frontCover,
-  'page1.jpeg': page1,
-  'page2.jpeg': page2,
-  'page3.jpeg': page3,
-  'page4.jpeg': page4,
-  'page5.jpeg': page5,
-  'page6.jpeg': page6,
-  'page7.jpeg': page7,
-  'page8.jpeg': page8,
-  'page9.jpeg': page9,
-  'page10.jpeg': page10,
+  'ChillyNinjas_0.jpeg': chillyNinjas0,
+  'ChillyNinjas_1.jpeg': chillyNinjas1,
+  'ChillyNinjas_2.jpeg': chillyNinjas2,
+  'ChillyNinjas_3.jpeg': chillyNinjas3,
+  'ChillyNinjas_4.jpeg': chillyNinjas4,
 }
 
 export function ComicFlipDemo() {
@@ -40,61 +29,55 @@ export function ComicFlipDemo() {
       alt: page.alt,
     }))
 
+    console.log("pages: " + JSON.stringify(pages))
+  // Calculate dimensions to fill screen with 80px padding
+  const [dimensions, setDimensions] = useState({ width: 400, height: 533 })
+  const aspectRatio = 3 / 4 // width / height
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      const padding = 80
+      const availableWidth = window.innerWidth - padding * 2
+      const availableHeight = window.innerHeight - padding * 2
+
+      // Calculate width and height maintaining aspect ratio
+      let width = availableWidth
+      let height = width / aspectRatio
+
+      // If height exceeds available space, scale down
+      if (height > availableHeight) {
+        height = availableHeight
+        width = height * aspectRatio
+      }
+
+      setDimensions({ width: Math.floor(width), height: Math.floor(height) })
+    }
+
+    updateDimensions()
+    console.log("dimensions: " + dimensions.width + "x" + dimensions.height)
+    window.addEventListener('resize', updateDimensions)
+    return () => window.removeEventListener('resize', updateDimensions)
+  }, [aspectRatio])
+
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-            📚 ComicFlip
-          </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400 mb-2">
-            React component based on{' '}
-            <a
-              href="https://github.com/neptunelabs/fsi-pages-samples"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-600 dark:text-blue-400 hover:underline"
-            >
-              FSI Pages
-            </a>{' '}
-            structure pattern
-          </p>
-          <p className="text-sm text-gray-500 dark:text-gray-500">
-            Click pages to flip, drag corners, or swipe on mobile devices
-          </p>
-        </div>
-
-        <div className="flex justify-center mb-8">
-          <ComicFlip
-            pages={pages}
-            width={400}
-            height={533}
-            showCover={true}
-            flippingTime={800}
-            usePortrait={true}
-            showPageCorners={true}
-            mobileScrollSupport={true}
-            useMouseEvents={true}
-            swipeDistance={30}
-          />
-        </div>
-
-        <div className="mt-8 text-center">
-          <div className="inline-block bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-2xl">
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-              Features
-            </h2>
-            <ul className="text-left text-gray-600 dark:text-gray-300 space-y-2">
-              <li>✅ Realistic 3D page flip animation</li>
-              <li>✅ Mouse and touch support</li>
-              <li>✅ Customizable flip speed and shadows</li>
-              <li>✅ Responsive design</li>
-              <li>✅ Page corner indicators</li>
-              <li>✅ Mobile swipe gestures</li>
-            </ul>
-          </div>
-        </div>
+    <div className="h-screen w-screen bg-fuchsia-500 flex items-center justify-center p-[80px] relative">
+      <div className="absolute top-4 left-4 bg-black bg-opacity-70 text-white px-4 py-2 rounded-lg font-mono text-sm">
+        Width: {dimensions.width}px × Height: {dimensions.height}px
+        <br />
+        Pages: {pages.length}
       </div>
+      <ComicFlip
+        pages={pages}
+        width={dimensions.width}
+        height={dimensions.height}
+        showCover={true}
+        flippingTime={800}
+        usePortrait={true}
+        showPageCorners={false}
+        mobileScrollSupport={true}
+        useMouseEvents={true}
+        swipeDistance={30}
+      />
     </div>
   )
 }
