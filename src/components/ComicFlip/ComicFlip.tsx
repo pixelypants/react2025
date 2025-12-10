@@ -15,6 +15,7 @@ export interface ComicFlipProps {
   className?: string
   showCover?: boolean
   flippingTime?: number
+  showPageCorners?: boolean
 }
 
 // Simple page component with forwardRef
@@ -34,6 +35,7 @@ export function ComicFlip({
   className = '',
   showCover = true,
   flippingTime = 1000,
+  showPageCorners = false,
 }: ComicFlipProps) {
   return (
     <HTMLFlipBook
@@ -42,6 +44,7 @@ export function ComicFlip({
       showCover={showCover}
       flippingTime={flippingTime}
       className={className}
+      showPageCorners={showPageCorners}
     >
       {pages.map((page, index) => (
         <Page key={page.id || index} page={page} index={index} />

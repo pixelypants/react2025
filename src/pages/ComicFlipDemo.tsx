@@ -4,13 +4,15 @@ import metadata from '@/assets/ChillyNinjas/metadata.json'
 import { useEffect, useState, useMemo } from 'react'
 
 // Import all ChillyNinjas images
+// Note: Vite requires static imports for assets, so we map metadata filenames to imports
 import chillyNinjas0 from '@/assets/ChillyNinjas/ChillyNinjas_0.jpeg'
 import chillyNinjas1 from '@/assets/ChillyNinjas/ChillyNinjas_1.jpeg'
 import chillyNinjas2 from '@/assets/ChillyNinjas/ChillyNinjas_2.jpeg'
 import chillyNinjas3 from '@/assets/ChillyNinjas/ChillyNinjas_3.jpeg'
 import chillyNinjas4 from '@/assets/ChillyNinjas/ChillyNinjas_4.jpeg'
 
-// Map filenames to imported images
+// Map metadata filenames to imported images
+// This allows us to use metadata.pages to determine which images to load
 const imageMap: Record<string, string> = {
   'ChillyNinjas_0.jpeg': chillyNinjas0,
   'ChillyNinjas_1.jpeg': chillyNinjas1,
@@ -88,6 +90,8 @@ export function ComicFlipDemo() {
         width = heightBasedWidth
       }
 
+      console.log('width', width)
+      console.log('height', height)
       setDimensions({
         width: Math.round(width),
         height: Math.round(height),
@@ -103,21 +107,33 @@ export function ComicFlipDemo() {
     return <div className="h-screen w-screen bg-fuchsia-500 flex items-center justify-center">Loading...</div>
   }
 
+  // Calculate double spread width for centering
+  const doubleSpreadWidth = dimensions ? dimensions.width * 2 : 0
+
   return (
-    <div className="h-screen w-screen bg-fuchsia-500 flex items-start relative p-[50px] overflow-visible">
+    <div className="h-screen w-screen bg-fuchsia-500 flex items-center justify-center relative p-[50px] overflow-visible">
       {dimensions && (
         <div className="absolute top-4 left-4 bg-black/70 text-white p-2 rounded text-xs z-50">
           Dimensions: {dimensions.width}px × {dimensions.height}px
         </div>
       )}
       {dimensions && (
-        <ComicFlip
-          pages={pages}
-          width={dimensions.width}
-          height={dimensions.height}
-          showCover={true}
-          flippingTime={800}
-        />
+        <div
+          style={{
+            width: `${doubleSpreadWidth}px`,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <ComicFlip
+            pages={pages}
+            width={dimensions.width}
+            height={dimensions.height}
+            showCover={true}
+            flippingTime={800}
+          />
+        </div>
       )}
     </div>
   )
