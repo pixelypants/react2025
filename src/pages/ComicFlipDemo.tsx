@@ -1,7 +1,7 @@
 import { ComicFlip } from '@/components/ComicFlip/ComicFlip'
 import type { ComicFlipPage } from '@/components/ComicFlip/ComicFlip'
 import metadata from '@/assets/ChillyNinjas/metadata.json'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 
 // Import all ChillyNinjas images
 import chillyNinjas0 from '@/assets/ChillyNinjas/ChillyNinjas_0.jpeg'
@@ -21,63 +21,104 @@ const imageMap: Record<string, string> = {
 
 export function ComicFlipDemo() {
   // Sort pages by order from metadata and map to ComicFlipPage format
-  const pages: ComicFlipPage[] = metadata.pages
-    .sort((a, b) => a.order - b.order)
-    .map((page) => ({
-      src: imageMap[page.filename],
-      id: page.order.toString(),
-      alt: page.alt,
-    }))
+  const pages: ComicFlipPage[] = useMemo(
+    () =>
+      metadata.pages
+        .sort((a, b) => a.order - b.order)
+        .map((page) => ({
+          src: imageMap[page.filename],
+          id: page.order.toString(),
+          alt: page.alt,
+        })),
+    []
+  )
 
-    console.log("pages: " + JSON.stringify(pages))
-  // Calculate dimensions to fill screen with 80px padding
-  const [dimensions, setDimensions] = useState({ width: 400, height: 533 })
-  const aspectRatio = 3 / 4 // width / height
+  // Store natural image dimensions
+  const [naturalDimensions, setNaturalDimensions] = useState<{ width: number; height: number } | null>(null)
+  const [dimensions, setDimensions] = useState<{ width: number; height: number } | null>(null)
 
+  // Load image to get natural dimensions
   useEffect(() => {
+    const img = new Image()
+    img.src = pages[0]?.src || ''
+    img.onload = () => {
+      setNaturalDimensions({
+        width: img.naturalWidth,
+        height: img.naturalHeight,
+      })
+    }
+    img.onerror = () => {
+      console.error('Failed to load image:', pages[0]?.src)
+    }
+  }, [pages])
+
+  // Calculate dimensions to fill screen with 50px padding
+  // Account for double spread width (2 pages side by side)
+  useEffect(() => {
+    if (!naturalDimensions) return
+
     const updateDimensions = () => {
-      const padding = 80
+      const padding = 50
       const availableWidth = window.innerWidth - padding * 2
       const availableHeight = window.innerHeight - padding * 2
 
-      // Calculate width and height maintaining aspect ratio
-      let width = availableWidth
-      let height = width / aspectRatio
+      const aspectRatio = naturalDimensions.width / naturalDimensions.height
 
-      // If height exceeds available space, scale down
-      if (height > availableHeight) {
+      // Calculate dimensions to fit within available space
+      // Account for double spread (2 pages side by side)
+      let width: number
+      let height: number
+
+      // Try fitting double spread by width first (2 pages = 2 * page width)
+      const doubleSpreadWidth = availableWidth
+      const singlePageWidth = doubleSpreadWidth / 2
+      const widthBasedHeight = singlePageWidth / aspectRatio
+
+      // Try fitting by height
+      const heightBasedWidth = availableHeight * aspectRatio
+
+      // Use whichever constraint fits better
+      if (widthBasedHeight <= availableHeight) {
+        // Width is the limiting factor (double spread)
+        width = singlePageWidth
+        height = widthBasedHeight
+      } else {
+        // Height is the limiting factor
         height = availableHeight
-        width = height * aspectRatio
+        width = heightBasedWidth
       }
 
-      setDimensions({ width: Math.floor(width), height: Math.floor(height) })
+      setDimensions({
+        width: Math.round(width),
+        height: Math.round(height),
+      })
     }
 
     updateDimensions()
-    console.log("dimensions: " + dimensions.width + "x" + dimensions.height)
     window.addEventListener('resize', updateDimensions)
     return () => window.removeEventListener('resize', updateDimensions)
-  }, [aspectRatio])
+  }, [naturalDimensions])
+
+  if (!dimensions) {
+    return <div className="h-screen w-screen bg-fuchsia-500 flex items-center justify-center">Loading...</div>
+  }
 
   return (
-    <div className="h-screen w-screen bg-fuchsia-500 flex items-center justify-center p-[80px] relative">
-      <div className="absolute top-4 left-4 bg-black bg-opacity-70 text-white px-4 py-2 rounded-lg font-mono text-sm">
-        Width: {dimensions.width}px × Height: {dimensions.height}px
-        <br />
-        Pages: {pages.length}
-      </div>
-      <ComicFlip
-        pages={pages}
-        width={dimensions.width}
-        height={dimensions.height}
-        showCover={true}
-        flippingTime={800}
-        usePortrait={true}
-        showPageCorners={false}
-        mobileScrollSupport={true}
-        useMouseEvents={true}
-        swipeDistance={30}
-      />
+    <div className="h-screen w-screen bg-fuchsia-500 flex items-start relative p-[50px] overflow-visible">
+      {dimensions && (
+        <div className="absolute top-4 left-4 bg-black/70 text-white p-2 rounded text-xs z-50">
+          Dimensions: {dimensions.width}px × {dimensions.height}px
+        </div>
+      )}
+      {dimensions && (
+        <ComicFlip
+          pages={pages}
+          width={dimensions.width}
+          height={dimensions.height}
+          showCover={true}
+          flippingTime={800}
+        />
+      )}
     </div>
   )
 }
